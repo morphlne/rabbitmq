@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.pan.rabbitmq</groupId>
-    <artifactId>direct-exchange</artifactId>
+    <artifactId>fanout-exchange</artifactId>
     <version>1.0</version>
 
     <properties>
