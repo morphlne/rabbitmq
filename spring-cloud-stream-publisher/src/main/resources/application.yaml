@@ -1,0 +1,15 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    stream:
+      bindings:
+        #must match binging from OutputMessageChannel.class
+        message-output:
+          #exchange with this name will be created on RabbitMQ
+          destination: message-processing
+      default:
+        contentType: application/json
