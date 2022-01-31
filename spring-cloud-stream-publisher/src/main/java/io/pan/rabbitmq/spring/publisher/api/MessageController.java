@@ -25,4 +25,14 @@ public class MessageController {
     );
   }
 
+  @GetMapping(value = "/send/dlq")
+  public void sendDlqMessage() {
+    System.out.println(LocalDateTime.now() + " Publish DLQ");
+    output.output().send(
+        MessageBuilder
+            .withPayload(new Message("Message DLQ from publisher"))
+            .build()
+    );
+  }
+
 }

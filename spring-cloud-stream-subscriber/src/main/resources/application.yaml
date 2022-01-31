@@ -8,6 +8,15 @@ spring:
     password: guest
   cloud:
     stream:
+      rabbit:
+        bindings:
+          #must match binging from InputMessageChannel.class
+          message-input:
+            consumer:
+              #exchange DLX &
+              #queue 'message-processing.message-processing-group.dlq' will be created for dead letters
+              #routing key = 'message-processing.message-processing-group'
+              autoBindDlq: true
       bindings:
         #must match binging from InputMessageChannel.class
         message-input:

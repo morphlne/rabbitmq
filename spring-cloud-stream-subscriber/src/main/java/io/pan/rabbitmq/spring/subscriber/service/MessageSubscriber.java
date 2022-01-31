@@ -12,6 +12,11 @@ public class MessageSubscriber {
 
   @StreamListener(InputMessageChannel.INPUT)
   public void handleMessage(Message message) {
+    if (message.getMessage().toLowerCase().contains("dlq")) {
+      //any error during message handling push it to dlq
+      throw new RuntimeException();
+    }
+    //happy flow
     System.out.println(LocalDateTime.now() + " Receive: " + message);
   }
 
