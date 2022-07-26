@@ -1,0 +1,36 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    stream:
+      function:
+        definition: inputManual
+      bindings:
+        inputManual-in-0:
+          destination: Event.Exchange.1
+          group: Event.Queue.1
+          contentType: application/json
+      rabbit:
+        bindings:
+          inputManual-in-0:
+            consumer:
+              exchangeType: direct
+              declareExchange: true
+              bindQueue: true
+              bindingRoutingKey: key
+              ttl: 86400000
+              queueNameGroupOnly: true
+              requeueRejected: false
+              acknowledgeMode: MANUAL
+              deadLetterExchange: Event.Exchange.Dead.1
+              deadLetterExchangeType: direct
+              deadLetterQueueName: Event.Queue.Dead.1
+              deadLetterRoutingKey: dead
+              declareDlx: true
+              autoBindDlq: true
+              dlqTtl: 60000
+              dlqDeadLetterExchange: Event.Exchange.1
+              dlqDeadLetterRoutingKey: key
