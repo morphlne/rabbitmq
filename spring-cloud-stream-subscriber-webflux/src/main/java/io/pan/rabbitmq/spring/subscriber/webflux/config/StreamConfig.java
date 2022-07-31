@@ -1,7 +1,7 @@
 package io.pan.rabbitmq.spring.subscriber.webflux.config;
 
 import io.pan.rabbitmq.spring.subscriber.webflux.dto.Event;
-import io.pan.rabbitmq.spring.subscriber.webflux.service.InputEventService;
+import io.pan.rabbitmq.spring.subscriber.webflux.service.InputEventHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,17 +13,17 @@ import java.util.function.Consumer;
 @Configuration
 public class StreamConfig {
 
-    private final InputEventService manualAcknowledgeEvent;
+    private final InputEventHandler manualAcknowledgeHandler;
 
     public StreamConfig(
-            @Qualifier("manualAcknowledgeEvent") InputEventService manualAcknowledgeEvent
+            @Qualifier("manualAcknowledgeHandler") InputEventHandler manualAcknowledgeHandler
     ) {
-        this.manualAcknowledgeEvent = manualAcknowledgeEvent;
+        this.manualAcknowledgeHandler = manualAcknowledgeHandler;
     }
 
     @Bean
     public Consumer<Flux<Message<Event>>> inputManual() {
-        return manualAcknowledgeEvent::handleInputEvent;
+        return manualAcknowledgeHandler::handleInputEvent;
     }
 
 }

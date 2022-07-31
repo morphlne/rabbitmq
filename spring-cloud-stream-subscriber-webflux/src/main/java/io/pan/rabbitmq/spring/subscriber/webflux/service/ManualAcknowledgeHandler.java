@@ -12,13 +12,13 @@ import reactor.core.publisher.Flux;
 import java.io.IOException;
 
 @Service
-public class ManualAcknowledgeEvent implements InputEventService {
+public class ManualAcknowledgeHandler implements InputEventHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(ManualAcknowledgeEvent.class);
+    private final Logger logger = LoggerFactory.getLogger(ManualAcknowledgeHandler.class);
 
     @Override
-    public void handleInputEvent(Flux<Message<Event>> eventFlux) {
-        eventFlux
+    public void handleInputEvent(Flux<Message<Event>> events) {
+        events
                 .doOnNext(this::logEvent)
                 .doOnNext(this::handleEvent)
                 .subscribe();
