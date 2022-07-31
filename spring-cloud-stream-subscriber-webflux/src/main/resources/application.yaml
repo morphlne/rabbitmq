@@ -7,11 +7,15 @@ spring:
   cloud:
     stream:
       function:
-        definition: inputManual
+        definition: inputManual;inputAuto
       bindings:
         inputManual-in-0:
           destination: Event.Exchange.1
           group: Event.Queue.1
+          contentType: application/json
+        inputAuto-in-0:
+          destination: Event.Exchange.2
+          group: Event.Queue.2
           contentType: application/json
       rabbit:
         bindings:
@@ -34,3 +38,12 @@ spring:
               dlqTtl: 60000
               dlqDeadLetterExchange: Event.Exchange.1
               dlqDeadLetterRoutingKey: key
+          inputAuto-in-0:
+            consumer:
+              exchangeType: direct
+              declareExchange: true
+              bindQueue: true
+              bindingRoutingKey: key
+              ttl: 86400000
+              queueNameGroupOnly: true
+              acknowledgeMode: AUTO
